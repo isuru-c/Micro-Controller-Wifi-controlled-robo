@@ -15,8 +15,21 @@ void setup()
 void loop(){
   if(Serial1.available()){
     String input = Serial1.readString();
-    Serial.println(input);
+    String data = getData(input);
+    Serial.println(data);
   }  
+}
+
+String getData(String input){
+  for(int i=0; i<input.length(); ++i){
+    if(input[i] == ':'){
+      String tmp = input.substring(9, i);
+      int len = tmp.toInt();
+      String data = input.substring(i+1, i+1+len);
+      return tmp + " " + data;
+    }
+  }
+  return "";
 }
 
 String sendData(String command, const int timeout, boolean debug)
